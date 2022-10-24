@@ -66,5 +66,3 @@ class Menu:
     def Billing_Form(self):
         self.newWindow = Toplevel(self.master)
         self.app = Billing(self.newWindow)
-
-
