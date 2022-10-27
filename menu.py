@@ -5,7 +5,7 @@ from tkinter import font
 import mysql.connector as sq
 from patient_form import Patient
 from room_form import Room
-from employee_form import Employee
+from employee_form import Doctor
 from appointment_form import Appointment
 from billing_form import Billing
 con=sq.connect(host="localhost",user="root",password="alanwalker")
@@ -33,7 +33,7 @@ class Menu:
         self.button2 = Button(self.LoginFrame, text="2.ROOM ALLOCATION",width =30,font="Helvetica 14 bold",bg="cadet blue",command=self.Room_Allocation)
         self.button2.grid(row=3,column=0,pady=10)
         
-        self.button3 = Button(self.LoginFrame, text="3.EMPLOYEE REGISTRATION",width =30,font="Helvetica 14 bold",bg="cadet blue",command=self.Employee_Reg)
+        self.button3 = Button(self.LoginFrame, text="3.DOCTOR REGISTRATION",width =30,font="Helvetica 14 bold",bg="cadet blue",command=self.Employee_Reg)
         self.button3.grid(row=5,column=0,pady=10)
         
         self.button4 = Button(self.LoginFrame, text="4.BOOK APPOINTMENT",width =30,font="Helvetica 14 bold",bg="cadet blue",command=self.Appointment_Form)
@@ -58,7 +58,7 @@ class Menu:
         self.app = Room(self.newWindow)
     def Employee_Reg(self):
         self.newWindow = Toplevel(self.master)
-        self.app = Employee(self.newWindow)
+        self.app = Doctor(self.newWindow)
     def Appointment_Form(self):
         self.newWindow = Toplevel(self.master)
         self.app = Appointment(self.newWindow)
