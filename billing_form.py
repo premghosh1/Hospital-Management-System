@@ -98,14 +98,17 @@ class Billing:
         self.lblapd  = Entry(self.LoginFrame,font="Helvetica 14 bold",bd=2,textvariable=self.price)
         self.lblapd.grid(row=4,column=3)
         
-        self.button3 = Button(self.LoginFrame2, text="UPDATE DATA",width =15,font="Helvetica 14 bold",bg="cadet blue",command= self.UPDATE_DATA)
+        self.button3 = Button(self.LoginFrame2, text="INSERT NEW DATA",width =15,font="Helvetica 14 bold",bg="cadet blue",command= self.INSERT_DATA)
         self.button3.grid(row=3,column=2)
         
-        self.button3 = Button(self.LoginFrame2, text="GENERATE BILL",width =15,font="Helvetica 14 bold",bg="cadet blue",command= self.GEN_BILL)
+        self.button3 = Button(self.LoginFrame2, text="UPDATE DATA",width =15,font="Helvetica 14 bold",bg="cadet blue",command= self.UPDATE_DATA)
         self.button3.grid(row=3,column=3)
+        
+        self.button3 = Button(self.LoginFrame2, text="GENERATE BILL",width =15,font="Helvetica 14 bold",bg="cadet blue",command= self.GEN_BILL)
+        self.button3.grid(row=3,column=4)
      
         self.button6 = Button(self.LoginFrame2, text="EXIT",width =10,font="Helvetica 14 bold",bg="cadet blue",command = self.Exit)
-        self.button6.grid(row=3,column=4)
+        self.button6.grid(row=3,column=5)
         
     def UPDATE_DATE(self):
         global b1,b2
@@ -119,8 +122,8 @@ class Billing:
         cur.execute("UPDATE ROOM SET DATE_DISCHARGED=%s where PAT_ID=%s", (b2, b1,))
         con.commit()
         tkinter.messagebox.showinfo("HOSPITAL DATABASE SYSTEM", "DISCHARGE DATE UPDATED")
-    
-    def UPDATE_DATA(self):
+
+    def INSERT_DATA(self):
         global c1, b1, P_id, b3, b4, b5, b6, dd, treat_1, treat_2, cost_t, b7, b8, med, med_q, price, u
         con=sq.connect(host="localhost",user="root",password="alanwalker")
         cur=con.cursor()
@@ -146,6 +149,30 @@ class Billing:
             cur.execute("INSERT INTO MEDS VALUES(%s,%s,%s,%s)", (b1, b6, b7, b8,))
             con.commit()
             tkinter.messagebox.showinfo("HOSPITAL DATABASE SYSTEM", "BILLING DATA SAVED")
+    
+    def UPDATE_DATA(self):
+        global c1, b1, P_id, b3, b4, b5, b6, dd, treat_1, treat_2, cost_t, b7, b8, med, med_q, price, u
+        con=sq.connect(host="localhost",user="root",password="alanwalker")
+        cur=con.cursor()
+        cur=con.cursor(buffered=True)
+        cur.execute("create database if not exists hello")
+        cur.execute("use hello")
+        b1 = (self.P_id.get())
+        b3 = (self.treat_1.get())
+        b4 = (self.treat_2.get())
+        b5 = (self.cost_t.get())
+        b6 = (self.med.get())
+        b7 = (self.med_q.get())
+        b8 = (self.price.get())   
+        p = []
+        cur.execute("Select * from TREAT where PAT_ID=%s", (b1,))
+        for i in cur:
+            p.append(i)
+        l=len(p)
+        cur.execute("UPDATE TREAT SET TREATMENT=%s, TREATMENT_CODE=%s, T_COST=%s WHERE PAT_ID=%s", (b3, b4, b5, b1,))
+        cur.execute("UPDATE MEDS SET MEDICINE_NAME=%s, M_COST=%s, M_QTY=%s WHERE PAT_ID=%s", (b6, b7, b8, b1,))
+        con.commit()
+        tkinter.messagebox.showinfo("HOSPITAL DATABASE SYSTEM", "BILLING DATA UPDATED")
             
     def GEN_BILL(self):
         global b1

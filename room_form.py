@@ -11,8 +11,8 @@ cur.execute("create database if not exists hello")
 cur.execute("use hello")
 cur.execute("create table if not exists room"
             "("
-            "pat_id bigint(12) not null,"
-            "ROOM_NO varchar(20) PRIMARY KEY,"
+            "pat_id bigint(12) PRIMARY KEY,"
+            "ROOM_NO varchar(20) not null,"
             "ROOM_TYPE varchar(20) not null,"
             "RATE int(10) not null,"
             "DATE_ADMITTED date,"
@@ -198,7 +198,10 @@ class S_Room:
         if (len(p)==0):
             tkinter.messagebox.showerror("HOSPITAL DATABASE SYSTEM","PATIENT NOT ALLOCATED ROOM")
         else:
-            t=cur.execute('SELECT PAT_ID,NAME,ROOM_NO,ROOM_TYPE FROM ROOM NATURAL JOIN PAT where PAT_ID=%s',(pat_rm,));
+            t=[]
+            cur.execute('SELECT PAT_ID,NAME,ROOM_NO,ROOM_TYPE FROM ROOM NATURAL JOIN PAT where PAT_ID=%s',(pat_rm,));
+            for i in cur:
+                t.append(i)
             for i in t:
             
                 self.l1 = Label(self.LoginFrame,text="PATIENT ID",font="Helvetica 14 bold",bg="cadet blue",bd=22)

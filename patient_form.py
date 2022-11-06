@@ -245,6 +245,9 @@ class DMenu:
         if (len(p)==0):
             tkinter.messagebox.showerror("HOSPITAL DATABSE SYSTEM","PATIENT RECORD NOT FOUND")
         else:
+            cur.execute("DELETE FROM TREAT WHERE PAT_ID =%s",(inp_d,))
+            cur.execute("DELETE FROM MEDS WHERE PAT_ID =%s",(inp_d,))
+            cur.execute("DELETE FROM ROOM WHERE PAT_ID =%s",(inp_d,))
             cur.execute("DELETE FROM CONTACT WHERE PAT_ID =%s",(inp_d,))
             cur.execute("DELETE FROM PAT WHERE PAT_ID =%s",(inp_d,))
             tkinter.messagebox.showinfo("HOSPITAL DATABASE SYSTEM", "DETAILS DELETED FROM DATABASE")

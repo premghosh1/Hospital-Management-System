@@ -59,7 +59,6 @@ class MainWindow:
         self.master.destroy()
     def new_window(self):
         self.newWindow = Toplevel(self.master)
-        self.app = self.Menu(self.newWindow)
-    
+        self.app = self.Menu(self.newWindow)   
 if __name__ == "__main__":
     main()
